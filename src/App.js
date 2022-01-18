@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{ useState} from 'react';
+import AudioMp from './AudioMp';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [data, setData] = useState([]);
+    fetch('http://api.alquran.cloud/v1/surah/1/ar.abdulsamad')
+    .then(res => res.json())
+    .then(res =>{
+        setData(res);
+    })
+
+    return (
+        <div>
+            <AudioMp />
+            <div>
+            {data.map(data => {
+                <p key={data.number}>{data.englishName}</p>
+            })}
+            </div>
+        </div>
+    )
 }
 
-export default App;
+export default App
